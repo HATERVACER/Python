@@ -1,3 +1,1 @@
-# This is my python projects 
-# This is code not private you can learn this code and use.
-Inakoto/HATERVACER(This is my two nicks)
+# Это мои проекты, вы можете их изучать и использовать
