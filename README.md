@@ -1,1 +1,1 @@
-# Это мои проекты, вы можете их изучать и использовать
+# Thats my famous projects on python
