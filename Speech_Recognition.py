@@ -24,7 +24,7 @@ def command():
 		audio = r.listen(source)
 
 	try:
-		cmd = r.recognize_google(audio).lower()
+		cmd = r.recognize_google(audio, language="ru-RU").lower()
 		print("User said: " + cmd)
 	except sr.UnknownValueError:
 		talk("Я вас не поняла")
@@ -33,11 +33,11 @@ def command():
 	return cmd
 
 def make_something(cmd):
-	if 'open website' in cmd:
+	if 'открой сайт' in cmd:
 		wb.open("google.com")
-	elif 'hello' in cmd:
+	elif 'привет' in cmd:
 		talk("Привет привет")
-	elif 'stop' in cmd:
+	elif 'стоп' in cmd:
 		talk("Досвидания")
 		sys.exit()
 
