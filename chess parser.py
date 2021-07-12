@@ -1,8 +1,13 @@
 from bs4 import BeautifulSoup as BS 
 import requests
+import webbrowser as wb
 import re
 
 page = 1
+articleID = 0
+articles = []
+running = True
+
 try:
 	pages = int(input("How many pages do you wanna get?: "))
 except: 
@@ -28,15 +33,38 @@ while page <= pages and pages > 0:
 		date = yep.select('.post-preview-meta-content > span')
 		author = yep.select('.post-preview-meta-username')
 		thumbnail = yep.select('.post-preview-thumbnail')
-		if param != "": 
+		if param != "":
 			if param.lower() in title[0].text.lower():
+				articles.append(title[0].get('href', "I really suck"))
 				if thumbnailsOn >= 1:
-					print("thumbnail link: " + thumbnail[0].get('srcset', 'no thumnail') + "\nname: " + title[0].text.strip() + "\ndate: " + date[0].get('title', 'no date').strip() + "\nauthor: " + author[0].text.strip() + "\n")
+					articleID +=1
+					print("thumbnail link: " + thumbnail[0].get('src', "couldn't get the thumbnail") + "\nlink:  " + title[0].get('href', "couldn't get the link") + "\nname: " + title[0].text.strip() + "\ndate: " + date[0].get('title', 'no date').strip() + "\nauthor: " + author[0].text.strip() + "\nID: " + str(articleID) + "\n")
 				else:
-					print("name: " + title[0].text.strip() + "\ndate: " + date[0].get('title', 'lol, how is there no title you idiot').strip() + "\nauthor: " + author[0].text.strip() + "\n")	
+					articleID +=1
+					print("link:  " + title[0].get('href', "couldn't get the link") + "\nname: " + title[0].text.strip() + "\ndate: " + date[0].get('title', 'lol, how is there no title you idiot').strip() + "\nauthor: " + author[0].text.strip() + "\nID: " + str(articleID) + "\n")	
 		else:
+			articles.append(title[0].get('href', "I really suck"))
 			if thumbnailsOn >= 1:
-				print("thumbnail link: " + thumbnail[0].get('srcset', 'no thumnail') + "\nname: " + title[0].text.strip() + "\ndate: " + date[0].get('title', 'no date').strip() + "\nauthor: " + author[0].text.strip() + "\n")
+				articleID +=1
+				print("thumbnail link: " + thumbnail[0].get('src', "couldn't get the thumbnail") + "\nlink:  " + title[0].get('href', "couldn't get the link") + "\nname: " + title[0].text.strip() + "\ndate: " + date[0].get('title', 'no date').strip() + "\nauthor: " + author[0].text.strip() + "\nID: " + str(articleID) + "\n")
 			else: 
-				print("name: " + title[0].text.strip() + "\ndate: " + date[0].get('title', 'lol, how is there no title you idiot').strip() + "\nauthor: " + author[0].text.strip() + "\n")
+				articleID +=1 
+				print("link:  " + title[0].get('href', "couldn't get the link") + "\nname: " + title[0].text.strip() + "\ndate: " + date[0].get('title', 'lol, how is there no title you idiot').strip() + "\nauthor: " + author[0].text.strip() + "\nID: " + str(articleID) + "\n")
 	page +=1
+
+# print(articles)
+
+links = int(input("Do you wanna open links (1 or 0): "))
+
+if links < 1:
+	exit()
+else: 
+	while running:
+		try:
+			ID = int(input("ID of the link(0 if you're done): "))
+		except: 
+			ID = 0
+		if ID <= 0:
+			break
+		else:
+			wb.open(articles[ID-1])
